@@ -9,9 +9,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 
+console.log(import.meta.env.VITE_AWS_USERPOOL_ID); // Add this to debug
+
 const poolData = {
-  UserPoolId: "us-east-1_inoOwBp7n",
-  ClientId: "54plpai3jlo52a6nb5llg26jsv",
+  UserPoolId: import.meta.env.VITE_AWS_USERPOOL_ID,
+  ClientId: import.meta.env.VITE_AWS_CLIENT_ID,
 };
 
 const Login = () => {
@@ -35,30 +37,30 @@ const Login = () => {
     setLoading(true);
     setError("");
     setSuccessMessage("");
-  
+
     const user = new CognitoUser({
       Username: email,
       Pool: userPool,
     });
-  
+
     const authDetails = new AuthenticationDetails({
       Username: email,
       Password: password,
     });
-  
+
     user.authenticateUser(authDetails, {
       onSuccess: (result) => {
         setLoading(false);
         const accessToken = result.getAccessToken().getJwtToken();
         const idToken = result.getIdToken().getJwtToken();
         const refreshToken = result.getRefreshToken().getToken(); // Fixed here
-  
+
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("idToken", idToken);
         localStorage.setItem("refreshToken", refreshToken);
         setToken(`Bearer ${idToken}`);
         setEmailStore(email);
-  
+
         navigate("/home");
       },
       onFailure: (err) => {
@@ -75,7 +77,7 @@ const Login = () => {
       },
       newPasswordRequired: (userAttributes) => {
         const currentUser = user;
-  
+
         if (newPassword && newPassword === confirmPassword) {
           currentUser.completeNewPasswordChallenge(
             newPassword,
@@ -87,12 +89,12 @@ const Login = () => {
                 const accessToken = result.getAccessToken().getJwtToken();
                 const idToken = result.getIdToken().getJwtToken();
                 const refreshToken = result.getRefreshToken().getToken(); // Fixed here
-  
+
                 localStorage.setItem("accessToken", accessToken);
                 localStorage.setItem("idToken", idToken);
                 localStorage.setItem("refreshToken", refreshToken);
                 setToken(`Bearer ${idToken}`);
-  
+
                 navigate("/home");
               },
               onFailure: (err) => {
@@ -224,11 +226,11 @@ const Login = () => {
         <div className="min-h-screen w-full lg:w-1/2 flex items-center justify-center bg-white px-4 sm:px-6 lg:px-8">
           <div className="w-full max-w-md bg-white">
             <div className="text-center">
-              <img
+              {/* <img
                 src={logo}
-                alt="Forecast.io Logo"
+                alt="Forcast.io Logo"
                 className="mx-auto w-4xl sm:w-40 lg:w-auto"
-              />
+              /> */}
             </div>
             <div className="mt-8">
               <h2 className="text-xl sm:text-2xl font-semibold text-black">
@@ -265,7 +267,7 @@ const Login = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
                   />
                 </div>
                 <div className="mb-4 relative">
@@ -281,7 +283,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
                   />
                   <button
                     type="button"
@@ -683,7 +685,7 @@ const Login = () => {
         <div className=" hidden lg:block lg:w-1/2">
           <img
             src={banner}
-            alt="Forecast.io Banner"
+            alt="Forcast.io Banner"
             className="w-full h-screen object-cover"
           />
         </div>
