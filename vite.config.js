@@ -16,9 +16,6 @@ export default defineConfig(({ mode }) => {
       global: 'window'
     },
     server: {
-      allowedHosts: [
-        'ce91-2401-4900-1f27-1e9f-39a8-f124-febe-b596.ngrok-free.app'
-      ],
       proxy: {
         '/api': {
           target: env.VITE_API_URL,

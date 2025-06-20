@@ -2,6 +2,7 @@ import moment from "moment/moment";
 
 const fetchCustomers = async (token) => {
   try {
+    debugger
     const response = await fetch("/api/customers/", {
       method: "GET",
       headers: {
