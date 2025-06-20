@@ -1,9 +1,8 @@
 import moment from "moment/moment";
-
+const url = import.meta.env.VITE_API_URL
 const fetchCustomers = async (token) => {
   try {
-    debugger
-    const response = await fetch("/api/customers/", {
+    const response = await fetch(`${url}/customers/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +27,7 @@ const fetchCustomers = async (token) => {
 
 const createCustomer = async (token, data) => {
   try {
-    const response = await fetch("/api/customers/", {
+    const response = await fetch(`${url}/customers/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +55,7 @@ const createCustomer = async (token, data) => {
 
 const fetchCustomerById = async (token, customerId) => {
   try {
-    const response = await fetch(`/api/customers/${customerId}/`, {
+    const response = await fetch(`${url}/customers/${customerId}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +80,7 @@ const fetchCustomerById = async (token, customerId) => {
 
 const updateCustomer = async (token, customerId, data) => {
   try {
-    const response = await fetch(`/api/customers/${customerId}/`, {
+    const response = await fetch(`${url}/customers/${customerId}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +106,7 @@ const updateCustomer = async (token, customerId, data) => {
 
 const deleteCustomer = async (token, customerId) => {
   try {
-    const response = await fetch(`/api/customers/${customerId}/`, {
+    const response = await fetch(`${url}/customers/${customerId}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -133,7 +132,7 @@ const deleteCustomer = async (token, customerId) => {
 // Location Endpoints
 const createLocation = async (token, data) => {
   try {
-    const response = await fetch("/api/locations/", {
+    const response = await fetch(`${url}//locations/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -159,7 +158,7 @@ const createLocation = async (token, data) => {
 
 const fetchLocationsForCustomer = async (token, customerId) => {
   try {
-    const response = await fetch(`/api/locations/?customer_id=${customerId}`, {
+    const response = await fetch(`${url}/locations/?customer_id=${customerId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -184,7 +183,7 @@ const fetchLocationsForCustomer = async (token, customerId) => {
 
 const fetchLocation = async (token, locationId) => {
   try {
-    const response = await fetch(`/api/locations/${locationId}`, {
+    const response = await fetch(`${url}/locations/${locationId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -209,7 +208,7 @@ const fetchLocation = async (token, locationId) => {
 
 const deleteLocation = async (token, locationId) => {
   try {
-    const response = await fetch(`/api/locations/${locationId}`, {
+    const response = await fetch(`${url}/locations/${locationId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -234,7 +233,7 @@ const deleteLocation = async (token, locationId) => {
 
 const createMenuItem = async (token, locationId, data) => {
   try {
-    const response = await fetch(`/api/menus/?location_id=${locationId}`, {
+    const response = await fetch(`${url}/menus/?location_id=${locationId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -260,7 +259,7 @@ const createMenuItem = async (token, locationId, data) => {
 
 const fetchMenuItems = async (token, locationId) => {
   try {
-    const response = await fetch(`/api/menus/?location_id=${locationId}`, {
+    const response = await fetch(`${url}/menus/?location_id=${locationId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -286,7 +285,7 @@ const fetchMenuItems = async (token, locationId) => {
 // Datapoint Endpoints
 const addDatapoints = async (token, data) => {
   try {
-    const response = await fetch("/api/datapoints/bulk_add/", {
+    const response = await fetch(`${url}/datapoints/bulk_add/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -312,7 +311,7 @@ const addDatapoints = async (token, data) => {
 
 const bulkUploadDatapoints = async (token, data) => {
   try {
-    const response = await fetch("/api/datapoints/csv_upload/", {
+    const response = await fetch(`${url}/datapoints/csv_upload/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -337,7 +336,7 @@ const bulkUploadDatapoints = async (token, data) => {
 const trainModel = async (token, locationId, menuId) => {
   try {
     const response = await fetch(
-      `api/mlmodels/train_model/?location_id=${locationId}&menu_id=${menuId}`,
+      `${url}/mlmodels/train_model/?location_id=${locationId}&menu_id=${menuId}`,
       {
         method: "GET",
         headers: {
@@ -369,7 +368,7 @@ const trainModel = async (token, locationId, menuId) => {
 const forecast = async (token, locationId, menuId, days) => {
   try {
     const today = moment().format("YYYY-MM-DD");
-    let url = `api/mlmodels/forecast/?location_id=${locationId}&menu_id=${menuId}&today=${today}&num_days=${days}`;
+    let url = `${url}/mlmodels/forecast/?location_id=${locationId}&menu_id=${menuId}&today=${today}&num_days=${days}`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -392,7 +391,7 @@ const forecast = async (token, locationId, menuId, days) => {
 
 const authSuccess = async (token, code) => {
   try {
-    const response = await fetch(`/api/auth?code=${code}`, {
+    const response = await fetch(`${url}/auth?code=${code}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

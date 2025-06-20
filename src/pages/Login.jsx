@@ -9,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 
-console.log(import.meta.env.VITE_AWS_USERPOOL_ID); // Add this to debug
+console.log(import.meta.env.VITE_API_URL,"VITE_API_URL"); // Add this to debug
 
 const poolData = {
   UserPoolId: import.meta.env.VITE_AWS_USERPOOL_ID,
