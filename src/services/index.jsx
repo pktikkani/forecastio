@@ -132,7 +132,7 @@ const deleteCustomer = async (token, customerId) => {
 // Location Endpoints
 const createLocation = async (token, data) => {
   try {
-    const response = await fetch(`${url}//locations/`, {
+    const response = await fetch(`${url}/locations/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
