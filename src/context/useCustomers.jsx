@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { fetchCustomers } from "../services/customer";
+import { fetchCustomers } from "../services";
 import { useAuth } from "./useAuth";
 
 const CustomerContext = createContext(null);
