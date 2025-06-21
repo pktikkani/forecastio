@@ -16,6 +16,9 @@ export default defineConfig(({ mode }) => {
       global: 'window'
     },
     server: {
+      allowedHosts: [
+        "https://forecastio.nubewired.com/"
+      ],
       proxy: {
         '/api': {
           target: env.VITE_API_URL,
