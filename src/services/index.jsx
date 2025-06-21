@@ -38,11 +38,11 @@ const createCustomer = async (token, data) => {
 
     if (!response.ok) {
       const errorData = await response.text();
-      istekError = new Error(
+      const requestError = new Error(
         `HTTP error! status: ${response.status}, message: ${errorData}`
       );
-      console.error("API Error:", istekError);
-      throw istekError;
+      console.error("API Error:", requestError);
+      throw requestError;
     }
 
     const responseData = await response.json();
