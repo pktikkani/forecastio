@@ -11,15 +11,9 @@ export default defineConfig(({ mode }) => {
     define: {
       global: 'window',
     },
+    // Remove the proxy completely - we'll use direct API calls
     server: {
-      proxy: {
-        '/api': {
-          target: env.VITE_API_URL,
-          changeOrigin: true,
-          secure: false, // Allow HTTP in dev if Railway isn't HTTPS yet
-          rewrite: (path) => path.replace(/^\/api/, ''),
-        },
-      },
+      // No proxy configuration
     },
   };
 });
