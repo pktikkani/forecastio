@@ -70,7 +70,7 @@ const Header = () => {
               />
             </svg>
           </button>
-          {/* <h1 className="text-2xl font-bold text-gray-800">Forecast.io</h1> */}
+          <h1 className="text-2xl font-bold text-gray-800">Forecastio</h1>
         </div>
         <div className="flex items-center space-x-4 relative">
           <div className="flex items-center space-x-2 cursor-pointer" ref={dropdownRef}>
