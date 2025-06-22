@@ -16,6 +16,7 @@ import {
   Legend,
 } from "chart.js";
 import { useNavigate } from "react-router-dom";
+import DashboardMetrics from "../components/DashboardMetrics";
 
 ChartJS.register(
   CategoryScale,
@@ -210,37 +211,11 @@ const Home = () => {
     handleBulkUpload(file);
   };
 
-  const handleFileChange = (e) => {
-    if (!selectedMenu) {
-      alert("Please select the menu item");
-      return;
-    }
-    const file = e.target.files[0];
-    processFile(file);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const file = e.dataTransfer.files[0];
-    processFile(file);
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
   return (
     <div className="flex bg-gray-100 min-h-screen">
-      {/* {isTraining ? (
-        <div className="fixed inset-0 bg-[#0000005c] bg-opacity-90 flex items-center justify-center z-50">
-          <div className="w-full h-full flex items-center justify-center">
-            <ForcastAnimation />
-          </div>
-        </div>
-      ) : null} */}
       <div className="flex-1 p-4 sm:p-6 overflow-y-auto max-h-screen">
+        <DashboardMetrics />
+
         <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6 mt-6">
           <div className="flex flex-col gap-4">
             <h3 className="text-base sm:text-lg font-semibold text-gray-800">
@@ -297,7 +272,8 @@ const Home = () => {
                   </select>
                 </div>
               )}
-
+            </div>
+            <div className="flex flex-wrap gap-4 mt-4">
               {menu && (
                 <div className="flex-1 min-w-[200px]">
                   <label
@@ -326,14 +302,13 @@ const Home = () => {
                   </select>
                 </div>
               )}
-            </div>
-            <div className="flex flex-wrap gap-4 mt-4">
               <div className="flex-1 min-w-[200px]">
-                <select className="w-full p-2 border rounded text-sm sm:text-base">
-                  <option>Regression Model</option>
-                </select>
-              </div>
-              <div className="flex-1 min-w-[200px]">
+                <label
+                  htmlFor="location-select"
+                  className="block mb-2 text-gray-700 font-medium"
+                >
+                  Days from today:
+                </label>
                 <select
                   value={dateRange}
                   onChange={(e) => setDateRange(e.target.value)}
@@ -370,7 +345,9 @@ const Home = () => {
             ) : (
               <div className="flex flex-col items-center justify-center gap-4">
                 <p className="text-gray-500 text-sm sm:text-base">
-                {noDataAvailable ? 'No data available to forcast.' : 'Select Outlet, Location and Menu to Forecast data.'}
+                  {noDataAvailable
+                    ? "No data available to forcast."
+                    : "Select Outlet, Location and Menu to Forecast data."}
                 </p>
                 {noDataAvailable && (
                   <button

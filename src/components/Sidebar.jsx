@@ -65,7 +65,7 @@ const Sidebar = () => {
   const menuItems = [
     {
       path: "/home",
-      label: "Forcast",
+      label: "Home",
       icon: MdOutlineAnalytics,
       activeIcon: MdAnalytics,
     },
@@ -76,22 +76,22 @@ const Sidebar = () => {
       activeIcon: MdUploadFile,
     },
     {
-      path: "/menu",
-      label: "Menu",
-      icon: MdOutlineRestaurantMenu,
-      activeIcon: MdRestaurantMenu,
-    },
-    {
       path: "/outlets",
       label: "Outlets",
       icon: MdOutlineStore,
       activeIcon: MdStore,
     },
     {
-      path: "/location",
+      path: "/locations",
       label: "Location",
       icon: MdOutlineLocationOn,
       activeIcon: MdLocationOn,
+    },
+    {
+      path: "/menu",
+      label: "Menu",
+      icon: MdOutlineRestaurantMenu,
+      activeIcon: MdRestaurantMenu,
     },
   ];
 

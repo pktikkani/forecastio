@@ -44,7 +44,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center bg-white shadow-md px-8 py-3">
+      <div className="flex justify-between items-center bg-white shadow-md px-8 py-3 box-shadow">
         <div className="flex justify-start items-center">
           <button
             className="lg:hidden p-2 text-gray-700 bg-white focus:outline-none pr-6"

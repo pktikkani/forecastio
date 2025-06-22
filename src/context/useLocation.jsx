@@ -9,6 +9,8 @@ export const LocationProvider = ({ children }) => {
   const { customers } = useCustomer();
   const [selectedLocationList, setSelectedLocationList] = useState([]);
   const [location, setLocation] = useState();
+  const [allLocations, setAllLocations] = useState([]);
+  const [isLocationLoading, setIsLocationLoading] = useState(false);
 
   const fetchData = async (customerId) => {
     if (!token) return;
@@ -26,16 +28,41 @@ export const LocationProvider = ({ children }) => {
     }
   };
 
+  const fetchAllLocations = async () => {
+    if (!token || customers?.length <= 0) return;
+    try {
+      setIsLocationLoading(true);
+      let all = [];
+      for (const customer of customers) {
+        const response = await fetchLocationsForCustomer(token, customer.id);
+        if (response?.length > 0) {
+          all = [...all, ...response];
+        }
+      }
+      setAllLocations(all);
+    } catch (error) {
+      console.error(`Failed to fetch data for all locations:`, error);
+      return [];
+    } finally {
+      setIsLocationLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (customers?.length > 0) fetchData(customers[0]?.id);
+    if (customers?.length > 0) {
+      fetchData(customers[0]?.id);
+      fetchAllLocations();
+    }
   }, [token, customers]);
 
   const contextValue = {
     location,
     setLocation,
+    isLocationLoading,
     selectedLocationList,
     setSelectedLocationList,
     fetchData,
+    allLocations,
   };
   return (
     <LocationContext.Provider value={contextValue}>

@@ -65,7 +65,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/location"
+                    path="/locations"
                     element={
                       <PrivateRoute>
                         <AppLayout>
