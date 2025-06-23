@@ -100,63 +100,68 @@ const Sidebar = () => {
     <>
       <div
         ref={drawerRef}
-        className={`fixed top-0 left-0 h-screen w-64 bg-white shadow-md transform transition-transform duration-300 ease-in-out z-40 flex flex-col justify-between 
-          ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"} 
-          lg:translate-x-0 lg:static lg:block
-          ${isDrawerOpen ? "overflow-y-auto" : ""}`}
+        className={`fixed inset-y-0 left-0 z-40 w-72 transform bg-white/80 backdrop-blur-xl shadow-2xl transition duration-300 ease-in-out lg:translate-x-0 lg:static lg:shadow-lg lg:bg-white/90
+          ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="p-4">
-          <div className="flex justify-between items-center">
-            <button
-              className="lg:hidden p-2 text-gray-700 focus:outline-none"
-              onClick={closeDrawer}
-              aria-label="Close menu"
-            >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+        <div className="flex h-full flex-col py-6">
+          <div className="px-4 sm:px-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-slate-900">Navigation</h2>
+              <button
+                className="-mr-2 flex h-10 w-10 items-center justify-center rounded-full p-2 text-slate-400 hover:text-slate-600 lg:hidden"
+                onClick={closeDrawer}
+                aria-label="Close sidebar"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <ul className="mt-4 space-y-2">
+          <nav className="mt-6 flex-1 space-y-1 px-2">
             {menuItems.map(
               ({ path, label, icon: Icon, activeIcon: ActiveIcon }) => (
-                <li key={path}>
-                  <Link
-                    to={path}
-                    className={`flex items-center gap-3 p-2 rounded text-gray-700 text-sm sm:text-base
-                    ${isActive(path) ? "bg-gray-200" : "hover:bg-gray-100"}`}
-                    onClick={closeDrawer}
-                  >
-                    {isActive(path) ? (
-                      <ActiveIcon size={20} />
-                    ) : (
-                      <Icon size={20} />
-                    )}
-                    {label}
-                  </Link>
-                </li>
+                <Link
+                  key={path}
+                  to={path}
+                  onClick={closeDrawer}
+                  className={`group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium transition-colors
+                    ${
+                      isActive(path)
+                        ? "bg-slate-100 text-slate-900"
+                        : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                    }`}
+                >
+                  {isActive(path) ? (
+                    <ActiveIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                  ) : (
+                    <Icon className="h-5 w-5 shrink-0 text-slate-400 group-hover:text-slate-600" aria-hidden="true" />
+                  )}
+                  {label}
+                </Link>
               )
             )}
-          </ul>
+          </nav>
         </div>
       </div>
 
       {isDrawerOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-[#0000009e] bg-opacity-50 z-30"
+          className="fixed inset-0 z-30 bg-black bg-opacity-25 lg:hidden"
           onClick={closeDrawer}
-        ></div>
+          aria-hidden="true"
+        />
       )}
     </>
   );

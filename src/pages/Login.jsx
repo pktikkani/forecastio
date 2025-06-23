@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
-import banner from "../assets/loginSideBanner.png";
+import backgroundAuth from "../assets/background-auth.jpg";
 import {
   CognitoUserPool,
   CognitoUser,
@@ -8,6 +8,8 @@ import {
 } from "amazon-cognito-identity-js";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import { Button } from "../components/ui/Button";
+import { TextField } from "../components/ui/TextField";
 
 console.log(import.meta.env.VITE_API_URL,"VITE_API_URL"); // Add this to debug
 
@@ -221,80 +223,67 @@ const Login = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-white">
-      <div className="flex flex-col lg:flex-row justify-between items-center bg-white">
-        <div className="min-h-screen w-full lg:w-1/2 flex items-center justify-center bg-white px-4 sm:px-6 lg:px-8">
-          <div className="w-full max-w-md bg-white">
-            <div className="text-center">
-              {/* <img
-                src={logo}
-                alt="Forcast.io Logo"
-                className="mx-auto w-4xl sm:w-40 lg:w-auto"
-              /> */}
-            </div>
-            <div className="mt-8">
-              <h2 className="text-xl sm:text-2xl font-semibold text-black">
-                {formState === "forgotPassword"
-                  ? "Forgot Password"
-                  : formState === "resetPassword"
-                  ? "Reset Password"
-                  : formState === "newPasswordRequired"
-                  ? "Create New Password"
-                  : "Welcome Back"}
-              </h2>
-              <p className="mt-2 text-sm text-black">
-                {formState === "forgotPassword"
-                  ? "Enter your email to receive a verification code"
-                  : formState === "resetPassword"
-                  ? "Enter the verification code and new password"
-                  : formState === "newPasswordRequired"
-                  ? "Please enter your new password"
-                  : "Please enter your credentials"}
-              </p>
-            </div>
-            {formState === "login" && (
-              <form onSubmit={handleLoginSubmit} className="mt-6 space-y-4">
-                <div className="mb-4">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-black"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-                  />
-                </div>
-                <div className="mb-4 relative">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-black"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 mt-6"
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                  >
+    <div className="relative flex min-h-screen shrink-0 justify-center md:px-12 lg:px-0">
+      <div className="relative z-10 flex flex-1 flex-col bg-white px-4 py-10 shadow-2xl sm:justify-center md:flex-none md:px-28">
+        <main className="mx-auto w-full max-w-md sm:px-4 md:w-96 md:max-w-sm md:px-0">
+          <div className="flex">
+            <img
+              src={logo}
+              alt="Forcast.io Logo"
+              className="h-10 w-auto"
+            />
+          </div>
+          <h2 className="mt-20 text-lg font-semibold text-gray-900">
+            {formState === "forgotPassword"
+              ? "Forgot Password"
+              : formState === "resetPassword"
+              ? "Reset Password"
+              : formState === "newPasswordRequired"
+              ? "Create New Password"
+              : "Sign in to your account"}
+          </h2>
+          <p className="mt-2 text-sm text-gray-700">
+            {formState === "forgotPassword"
+              ? "Enter your email to receive a verification code"
+              : formState === "resetPassword"
+              ? "Enter the verification code and new password"
+              : formState === "newPasswordRequired"
+              ? "Please enter your new password"
+              : "Enter your credentials to access your account"}
+          </p>
+          {formState === "login" && (
+            <form onSubmit={handleLoginSubmit} className="mt-10 grid grid-cols-1 gap-y-8">
+              <TextField
+                label="Email address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+              <div className="relative">
+                <TextField
+                  label="Password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 top-8 pr-3 flex items-center text-sm leading-5"
+                  aria-label={
+                    showPassword ? "Hide password" : "Show password"
+                  }
+                >
                     <svg
-                      className="h-5 w-5 text-black"
+                      className="h-5 w-5 text-gray-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -325,118 +314,102 @@ const Login = () => {
                     </svg>
                   </button>
                 </div>
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 space-y-2 sm:space-y-0">
-                  <button
-                    type="button"
-                    onClick={() => setFormState("forgotPassword")}
-                    className="text-sm text-indigo-500"
-                  >
-                    Forgot Password?
-                  </button>
-                </div>
-                {error && (
-                  <div className="mt-2 text-sm text-black">{error}</div>
-                )}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                >
-                  {loading ? "Loading..." : "Sign In"}
-                </button>
-              </form>
-            )}
-            {formState === "forgotPassword" && (
-              <form
-                onSubmit={handleForgotPasswordSubmit}
-                className="mt-6 space-y-4"
-              >
-                <div className="mb-4">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-black"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-                  />
-                </div>
-                {error && (
-                  <div className="mt-2 text-sm text-black">{error}</div>
-                )}
-                {successMessage && (
-                  <div className="mt-2 text-sm text-black">
-                    {successMessage}
-                  </div>
-                )}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                >
-                  {loading ? "Loading..." : "Send Verification Code"}
-                </button>
+              <div className="flex items-center justify-between">
                 <button
                   type="button"
-                  onClick={() => setFormState("login")}
-                  className="w-full py-2 px-4 mt-2 bg-gray-200 text-black font-medium rounded-md hover:bg-gray-300 focus:outline-none"
+                  onClick={() => setFormState("forgotPassword")}
+                  className="text-sm font-medium text-blue-600 hover:underline"
                 >
-                  Back to Sign In
+                  Forgot password?
                 </button>
-              </form>
-            )}
-            {formState === "resetPassword" && (
-              <form
-                onSubmit={handleResetPasswordSubmit}
-                className="mt-6 space-y-4"
-              >
-                <div className="mb-4">
-                  <label
-                    htmlFor="verificationCode"
-                    className="block text-sm font-medium text-black"
-                  >
-                    Verification Code
-                  </label>
-                  <input
-                    type="text"
-                    id="verificationCode"
-                    value={verificationCode}
-                    onChange={(e) => setVerificationCode(e.target.value)}
-                    placeholder="Enter verification code"
-                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-                  />
+              </div>
+              {error && (
+                <div className="text-sm text-red-600">{error}</div>
+              )}
+              <div>
+                <Button type="submit" variant="solid" color="blue" className="w-full" disabled={loading}>
+                  <span>
+                    {loading ? "Loading..." : "Sign in"} <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </Button>
+              </div>
+            </form>
+          )}
+          {formState === "forgotPassword" && (
+            <form
+              onSubmit={handleForgotPasswordSubmit}
+              className="mt-10 grid grid-cols-1 gap-y-8"
+            >
+              <TextField
+                label="Email address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+              {error && (
+                <div className="text-sm text-red-600">{error}</div>
+              )}
+              {successMessage && (
+                <div className="text-sm text-green-600">
+                  {successMessage}
                 </div>
-                <div className="mb-4 relative">
-                  <label
-                    htmlFor="newPassword"
-                    className="block text-sm font-medium text-black"
-                  >
-                    New Password
-                  </label>
-                  <input
-                    type={showNewPassword ? "text" : "password"}
-                    id="newPassword"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Enter new password"
-                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 mt-6"
-                    aria-label={
-                      showNewPassword ? "Hide password" : "Show password"
-                    }
-                  >
+              )}
+              <div className="space-y-3">
+                <Button type="submit" variant="solid" color="blue" className="w-full" disabled={loading}>
+                  <span>
+                    {loading ? "Loading..." : "Send verification code"} <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  color="slate"
+                  className="w-full"
+                  onClick={() => setFormState("login")}
+                >
+                  Back to sign in
+                </Button>
+              </div>
+            </form>
+          )}
+          {formState === "resetPassword" && (
+            <form
+              onSubmit={handleResetPasswordSubmit}
+              className="mt-10 grid grid-cols-1 gap-y-8"
+            >
+              <TextField
+                label="Verification code"
+                name="verificationCode"
+                type="text"
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                placeholder="Enter verification code"
+                required
+              />
+              <div className="relative">
+                <TextField
+                  label="New password"
+                  name="newPassword"
+                  type={showNewPassword ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  className="absolute inset-y-0 right-0 top-8 pr-3 flex items-center text-sm leading-5"
+                  aria-label={
+                    showNewPassword ? "Hide password" : "Show password"
+                  }
+                >
                     <svg
-                      className="h-5 w-5 text-black"
+                      className="h-5 w-5 text-gray-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -491,7 +464,7 @@ const Login = () => {
                     }
                   >
                     <svg
-                      className="h-5 w-5 text-black"
+                      className="h-5 w-5 text-gray-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -522,60 +495,57 @@ const Login = () => {
                     </svg>
                   </button>
                 </div>
-                {error && (
-                  <div className="mt-2 text-sm text-black">{error}</div>
-                )}
-                {successMessage && (
-                  <div className="mt-2 text-sm text-black">
-                    {successMessage}
-                  </div>
-                )}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              {error && (
+                <div className="text-sm text-red-600">{error}</div>
+              )}
+              {successMessage && (
+                <div className="text-sm text-green-600">
+                  {successMessage}
+                </div>
+              )}
+              <div className="space-y-3">
+                <Button type="submit" variant="solid" color="blue" className="w-full" disabled={loading}>
+                  <span>
+                    {loading ? "Loading..." : "Reset password"} <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  color="slate"
+                  className="w-full"
+                  onClick={() => setFormState("login")}
                 >
-                  {loading ? "Loading..." : "Reset Password"}
-                </button>
+                  Back to sign in
+                </Button>
+              </div>
+            </form>
+          )}
+          {formState === "newPasswordRequired" && (
+            <form
+              onSubmit={handleNewPasswordSubmit}
+              className="mt-10 grid grid-cols-1 gap-y-8"
+            >
+              <div className="relative">
+                <TextField
+                  label="New password"
+                  name="newPassword"
+                  type={showNewPassword ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new password"
+                  required
+                />
                 <button
                   type="button"
-                  onClick={() => setFormState("login")}
-                  className="w-full py-2 px-4 mt-2 bg-gray-200 text-black font-medium rounded-md hover:bg-gray-300 focus:outline-none"
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  className="absolute inset-y-0 right-0 top-8 pr-3 flex items-center text-sm leading-5"
+                  aria-label={
+                    showNewPassword ? "Hide password" : "Show password"
+                  }
                 >
-                  Back to Sign In
-                </button>
-              </form>
-            )}
-            {formState === "newPasswordRequired" && (
-              <form
-                onSubmit={handleNewPasswordSubmit}
-                className="mt-6 space-y-4"
-              >
-                <div className="mb-4 relative">
-                  <label
-                    htmlFor="newPassword"
-                    className="block text-sm font-medium text-black"
-                  >
-                    New Password
-                  </label>
-                  <input
-                    type={showNewPassword ? "text" : "password"}
-                    id="newPassword"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Enter new password"
-                    className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 mt-6"
-                    aria-label={
-                      showNewPassword ? "Hide password" : "Show password"
-                    }
-                  >
                     <svg
-                      className="h-5 w-5 text-black"
+                      className="h-5 w-5 text-gray-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -630,7 +600,7 @@ const Login = () => {
                     }
                   >
                     <svg
-                      className="h-5 w-5 text-black"
+                      className="h-5 w-5 text-gray-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -661,34 +631,35 @@ const Login = () => {
                     </svg>
                   </button>
                 </div>
-                {error && (
-                  <div className="mt-2 text-sm text-black">{error}</div>
-                )}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                >
-                  {loading ? "Loading..." : "Submit New Password"}
-                </button>
-                <button
+              {error && (
+                <div className="text-sm text-red-600">{error}</div>
+              )}
+              <div className="space-y-3">
+                <Button type="submit" variant="solid" color="blue" className="w-full" disabled={loading}>
+                  <span>
+                    {loading ? "Loading..." : "Set new password"} <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </Button>
+                <Button
                   type="button"
+                  variant="outline"
+                  color="slate"
+                  className="w-full"
                   onClick={() => setFormState("login")}
-                  className="w-full py-2 px-4 mt-2 bg-gray-200 text-black font-medium rounded-md hover:bg-gray-300 focus:outline-none"
                 >
-                  Back to Sign In
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-        <div className=" hidden lg:block lg:w-1/2">
-          <img
-            src={banner}
-            alt="Forcast.io Banner"
-            className="w-full h-screen object-cover"
-          />
-        </div>
+                  Back to sign in
+                </Button>
+              </div>
+            </form>
+          )}
+        </main>
+      </div>
+      <div className="hidden sm:contents lg:relative lg:block lg:flex-1">
+        <img
+          className="absolute inset-0 h-full w-full object-cover"
+          src={backgroundAuth}
+          alt=""
+        />
       </div>
     </div>
   );

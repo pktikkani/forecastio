@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useCustomer } from "../context/useCustomers";
 import { useLocation } from "../context/useLocation";
 import LocationPopup from "../components/LocationPopup";
+import { Button } from "../components/ui/Button";
+import { SelectField } from "../components/ui/TextField";
+import { MdLocationOn, MdEdit, MdDelete, MdAdd } from "react-icons/md";
 
 const Location = () => {
   const { selectedLocationList, fetchData } = useLocation();
@@ -32,30 +35,25 @@ const Location = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="flex-1 p-6">
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+    <div className="space-y-6">
+      <div className="relative overflow-hidden rounded-2xl bg-white/10 shadow-xl backdrop-blur-xl ring-1 ring-white/10">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/30" />
+        <div className="relative p-6 sm:p-8">
           <div className="flex justify-between items-start mb-6 flex-col sm:flex-row gap-4">
             <div>
-              <h2 className="text-2xl font-semibold text-gray-800">
+              <h2 className="text-2xl font-semibold text-gray-900">
                 Locations
               </h2>
-              <p className="text-gray-500">
-                Manage your restaurant's location
+              <p className="text-gray-600 mt-1">
+                Manage your restaurant's locations
               </p>
             </div>
-            <div className="flex items-center">
-              <label
-                htmlFor="location-select"
-                className="mr-2 text-gray-700 font-medium"
-              >
-                Outlets:
-              </label>
-              <select
+            <div className="flex items-center gap-4">
+              <SelectField
+                label="Select Outlet"
                 id="location-select"
                 value={selectedCustomerId}
                 onChange={handleSelectCustomer}
-                className="px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
               >
                 {customers?.length > 0 ? (
                   customers.map((customer) => (
@@ -66,29 +64,41 @@ const Location = () => {
                 ) : (
                   <option value="">No outlets available</option>
                 )}
-              </select>
-            </div>
-            {customers?.length > 0 && (
-              <div className="flex items-center gap-4">
-                <button
+              </SelectField>
+              {customers?.length > 0 && (
+                <Button
                   onClick={() => setIsOpen(true)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  variant="solid"
+                  color="blue"
                 >
-                  + Add New Location
-                </button>
-              </div>
-            )}
+                  <MdAdd className="mr-2 h-4 w-4" />
+                  Add New Location
+                </Button>
+              )}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {Array.isArray(selectedLocationList) && selectedLocationList.length > 0 ? (
               selectedLocationList.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white border rounded-lg shadow p-4 hover:shadow-md transition-shadow duration-200"
+                  className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm shadow-lg ring-1 ring-white/20 hover:shadow-xl transition-all duration-200 hover:scale-105 group"
                 >
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-medium text-gray-800 truncate">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 to-emerald-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 p-3 shadow-lg">
+                        <MdLocationOn className="h-6 w-6 text-white" />
+                      </div>
+                      <button
+                        onClick={() => handleDelete(item)}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg bg-white/50 hover:bg-white/70 text-gray-600 hover:text-red-600"
+                      >
+                        <MdDelete className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate">
                       {item.name}
                     </h3>
                     <div className="text-sm text-gray-600 space-y-1">
@@ -106,7 +116,6 @@ const Location = () => {
                         {item.timezone}
                       </p>
                     </div>
-                  </div>
                   <div className="flex justify-end items-center mt-4 space-x-2">
                     {/* <button
                       onClick={() => handleUpdate(item)}
@@ -148,6 +157,7 @@ const Location = () => {
                     </button>
                   </div>
                 </div>
+                </div>
               ))
             ) : (
               <div className="col-span-full text-center py-4">
@@ -160,7 +170,8 @@ const Location = () => {
             )}
           </div>
         </div>
-        {isOpen > 0 && (
+      </div>
+      {isOpen && (
           <LocationPopup
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}
@@ -168,7 +179,7 @@ const Location = () => {
             selectedCustomerId={selectedCustomerId}
           />
         )}
-        {isDeleteOpen > 0 && (
+      {isDeleteOpen && (
           <LocationPopup
             isOpen={isDeleteOpen}
             onClose={() => setIsDeleteOpen(false)}
@@ -178,7 +189,7 @@ const Location = () => {
             selectedCustomerId={selectedCustomerId}
           />
         )}
-        {isUpdateOpen > 0 && (
+      {isUpdateOpen && (
           <LocationPopup
             isOpen={isUpdateOpen}
             onClose={() => setIsUpdateOpen(false)}
@@ -187,10 +198,9 @@ const Location = () => {
             customers={customers}
             selectedCustomerId={selectedCustomerId}
           />
-        )}
-      </div>
+      )}
     </div>
   );
-};
+}
 
 export default Location;

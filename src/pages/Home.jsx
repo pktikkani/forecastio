@@ -17,6 +17,8 @@ import {
 } from "chart.js";
 import { useNavigate } from "react-router-dom";
 import DashboardMetrics from "../components/DashboardMetrics";
+import { Button } from "../components/ui/Button";
+import { SelectField } from "../components/ui/TextField";
 
 ChartJS.register(
   CategoryScale,
@@ -139,6 +141,7 @@ const Home = () => {
     if (customers?.length > 0) {
       handleCustomerSelect(customers[0]?.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customers]);
 
   const handleBulkUpload = async (file) => {
@@ -212,127 +215,106 @@ const Home = () => {
   };
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
-      <div className="flex-1 p-4 sm:p-6 overflow-y-auto max-h-screen">
-        <DashboardMetrics />
+    <div className="space-y-6">
+      <div className="relative overflow-hidden rounded-2xl bg-white/10 shadow-xl backdrop-blur-xl ring-1 ring-white/10">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/30" />
+        <div className="relative p-8">
+          <DashboardMetrics />
+        </div>
+      </div>
 
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6 mt-6">
-          <div className="flex flex-col gap-4">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-800">
-              Sales Prediction
-            </h3>
+      <div className="relative overflow-hidden rounded-2xl bg-white/10 shadow-xl backdrop-blur-xl ring-1 ring-white/10">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/30" />
+        <div className="relative p-8">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">
+            Sales Prediction
+          </h3>
 
-            <div className="flex flex-wrap gap-4">
-              {customers?.length > 0 && (
-                <div className="flex-1 min-w-[200px]">
-                  <label
-                    htmlFor="location-select"
-                    className="block mb-2 text-gray-700 font-medium"
-                  >
-                    Outlets:
-                  </label>
-                  <select
-                    id="location-select"
-                    value={location}
-                    onChange={(e) =>
-                      handleCustomerSelect(Number(e.target.value))
-                    }
-                    className="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
-                  >
-                    {customers?.length > 0 &&
-                      customers.map((loc) => (
-                        <option key={loc.id} value={loc?.id}>
-                          {loc?.name} {loc?.city}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-              )}
-
-              {selectedLocationList && (
-                <div className="flex-1 min-w-[200px]">
-                  <label
-                    htmlFor="location-select"
-                    className="block mb-2 text-gray-700 font-medium"
-                  >
-                    Location:
-                  </label>
-                  <select
-                    id="location-select"
-                    value={menuLocation}
-                    onChange={(e) => setMenuLocation(Number(e.target.value))}
-                    className="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
-                  >
-                    {selectedLocationList?.length > 0 &&
-                      selectedLocationList.map((loc) => (
-                        <option key={loc.id} value={loc?.id}>
-                          {loc?.name} {loc?.city}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-4 mt-4">
-              {menu && (
-                <div className="flex-1 min-w-[200px]">
-                  <label
-                    htmlFor="location-select"
-                    className="block mb-2 text-gray-700 font-medium"
-                  >
-                    Menu:
-                  </label>
-                  <select
-                    id="location-select"
-                    value={selectedMenu || ""}
-                    onChange={(e) =>
-                      setSelectedMenu(
-                        e.target.value ? Number(e.target.value) : ""
-                      )
-                    }
-                    className="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
-                  >
-                    <option value="">Select Menu</option>
-                    {menu?.length > 0 &&
-                      menu.map((loc) => (
-                        <option key={loc.id} value={loc?.id}>
-                          {loc?.name} {loc?.city}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-              )}
-              <div className="flex-1 min-w-[200px]">
-                <label
-                  htmlFor="location-select"
-                  className="block mb-2 text-gray-700 font-medium"
-                >
-                  Days from today:
-                </label>
-                <select
-                  value={dateRange}
-                  onChange={(e) => setDateRange(e.target.value)}
-                  className="w-full p-2 border rounded text-sm sm:text-base"
-                >
-                  {[...Array(30)].map((_, index) => (
-                    <option key={index + 1} value={`${index + 1}`}>
-                      {index + 1} {index === 0 ? "Day" : "Days"}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {customers?.length > 0 && (
+              <SelectField
+                label="Outlets"
+                id="outlet-select"
+                value={location}
+                onChange={(e) =>
+                  handleCustomerSelect(Number(e.target.value))
+                }
+              >
+                {customers?.length > 0 &&
+                  customers.map((loc) => (
+                    <option key={loc.id} value={loc?.id}>
+                      {loc?.name} {loc?.city}
                     </option>
                   ))}
-                </select>
-              </div>
-              <button
-                onClick={getForcastData}
-                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm sm:text-base whitespace-nowrap"
+              </SelectField>
+            )}
+
+            {selectedLocationList && (
+              <SelectField
+                label="Location"
+                id="location-select"
+                value={menuLocation}
+                onChange={(e) => setMenuLocation(Number(e.target.value))}
               >
-                Forecast
-              </button>
-            </div>
+                {selectedLocationList?.length > 0 &&
+                  selectedLocationList.map((loc) => (
+                    <option key={loc.id} value={loc?.id}>
+                      {loc?.name} {loc?.city}
+                    </option>
+                  ))}
+              </SelectField>
+            )}
+            
+            {menu && (
+              <SelectField
+                label="Menu"
+                id="menu-select"
+                value={selectedMenu || ""}
+                onChange={(e) =>
+                  setSelectedMenu(
+                    e.target.value ? Number(e.target.value) : ""
+                  )
+                }
+              >
+                <option value="">Select Menu</option>
+                {menu?.length > 0 &&
+                  menu.map((loc) => (
+                    <option key={loc.id} value={loc?.id}>
+                      {loc?.name} {loc?.city}
+                    </option>
+                  ))}
+              </SelectField>
+            )}
+            <SelectField
+              label="Days from today"
+              id="days-select"
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value)}
+            >
+              {[...Array(30)].map((_, index) => (
+                <option key={index + 1} value={`${index + 1}`}>
+                  {index + 1} {index === 0 ? "Day" : "Days"}
+                </option>
+              ))}
+            </SelectField>
+          </div>
+          
+          <div className="mt-6 flex justify-end">
+            <Button
+              onClick={getForcastData}
+              variant="solid"
+              color="blue"
+            >
+              Generate Forecast
+            </Button>
           </div>
         </div>
+      </div>
 
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6 mt-6">
-          <div className="mt-6 h-[300px] sm:h-[400px] md:h-[500px] flex items-center justify-center bg-gray-100 rounded-lg">
+      <div className="relative overflow-hidden rounded-2xl bg-white/10 shadow-xl backdrop-blur-xl ring-1 ring-white/10">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/30" />
+        <div className="relative p-8">
+          <div className="h-[300px] sm:h-[400px] md:h-[500px] flex items-center justify-center bg-gradient-to-br from-gray-50/50 to-gray-100/50 rounded-xl backdrop-blur-sm">
             {isLoading ? (
               <div className="flex flex-col items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -344,18 +326,19 @@ const Home = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center gap-4">
-                <p className="text-gray-500 text-sm sm:text-base">
+                <p className="text-gray-500 text-center">
                   {noDataAvailable
-                    ? "No data available to forcast."
-                    : "Select Outlet, Location and Menu to Forecast data."}
+                    ? "No data available to forecast."
+                    : "Select Outlet, Location and Menu to generate forecast data."}
                 </p>
                 {noDataAvailable && (
-                  <button
+                  <Button
                     onClick={() => navigate("/trainModel")}
-                    className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm sm:text-base"
+                    variant="solid"
+                    color="blue"
                   >
                     Upload Training Data
-                  </button>
+                  </Button>
                 )}
               </div>
             )}

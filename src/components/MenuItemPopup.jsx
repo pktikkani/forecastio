@@ -102,14 +102,14 @@ const MenuItemPopup = ({
     setError(null);
 
     try {
-      await deleteCustomer(token, data.id);
-      setMenu((prevCustomers) =>
-        prevCustomers.filter((c) => c.id !== data.id)
+      await deleteMenuItem(token, data.id, menuLocation);
+      setMenu((prevMenuItems) =>
+        prevMenuItems.filter((item) => item.id !== data.id)
       );
       setShowDeleteConfirm(false);
       onClose();
     } catch (err) {
-      setError(err.message || "Failed to delete customer");
+      setError(err.message || "Failed to delete menu item");
     } finally {
       setLoading(false);
     }

@@ -238,7 +238,7 @@ const TrainModel = () => {
   };
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex min-h-screen">
       {isTraining ? (
         <div className="fixed inset-0 bg-[#0000005c] bg-opacity-90 flex items-center justify-center z-50">
           <div className="w-full h-full flex items-center justify-center ">
@@ -247,61 +247,106 @@ const TrainModel = () => {
         </div>
       ) : null}
       <div className="flex-1 p-4 sm:p-6 overflow-y-auto max-h-screen">
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6 mt-6">
+        <div className="relative overflow-hidden rounded-2xl bg-white/10 shadow-xl backdrop-blur-xl ring-1 ring-white/10 mb-6 mt-6">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/30" />
+          <div className="relative p-4 sm:p-6">
           <div className="prose max-w-none">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
               How to Use the Sales Prediction System
             </h2>
-            <div className="space-y-4 text-gray-600">
-              <div>
-                <h3 className="text-lg font-medium text-gray-700">
-                  Step 1: Select Your Parameters
-                </h3>
-                <p>
-                  First, select your outlet, location, and menu item from the
-                  dropdown menus. These selections will determine which data
-                  we'll use for training and prediction.
-                </p>
+            <div className="space-y-6">
+              <div className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm shadow-lg ring-1 ring-white/20 p-6 hover:shadow-xl transition-all duration-200 group">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 p-3 shadow-lg">
+                      <span className="text-white font-bold text-lg">1</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        Select Your Parameters
+                      </h3>
+                      <p className="text-gray-600">
+                        First, select your outlet, location, and menu item from the
+                        dropdown menus. These selections will determine which data
+                        we'll use for training and prediction.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-medium text-gray-700">
-                  Step 2: Upload Historical Data
-                </h3>
-                <p>
-                  Upload your historical sales data in CSV format. The data
-                  should include dates and corresponding sales values. You can
-                  either drag and drop your file or click the upload button.
-                </p>
+              <div className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm shadow-lg ring-1 ring-white/20 p-6 hover:shadow-xl transition-all duration-200 group">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 to-emerald-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 p-3 shadow-lg">
+                      <span className="text-white font-bold text-lg">2</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        Upload Historical Data
+                      </h3>
+                      <p className="text-gray-600">
+                        Upload your historical sales data in CSV format. The data
+                        should include dates and corresponding sales values. You can
+                        either drag and drop your file or click the upload button.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-medium text-gray-700">
-                  Step 3: Train the Model
-                </h3>
-                <p>
-                  After uploading your data, click the "Train Data" button to
-                  train the prediction model. The system will process your
-                  historical data and prepare it for forecasting.
-                </p>
+              <div className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm shadow-lg ring-1 ring-white/20 p-6 hover:shadow-xl transition-all duration-200 group">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-pink-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 p-3 shadow-lg">
+                      <span className="text-white font-bold text-lg">3</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        Train the Model
+                      </h3>
+                      <p className="text-gray-600">
+                        After uploading your data, click the "Train Data" button to
+                        train the prediction model. The system will process your
+                        historical data and prepare it for forecasting.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-medium text-gray-700">
-                  Step 4: View Predictions
-                </h3>
-                <p>
-                  Once training is complete, the system will display a forecast
-                  chart showing predicted sales values for the selected number
-                  of days.
-                </p>
+              <div className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm shadow-lg ring-1 ring-white/20 p-6 hover:shadow-xl transition-all duration-200 group">
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-400/10 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-lg bg-gradient-to-br from-orange-500 to-red-600 p-3 shadow-lg">
+                      <span className="text-white font-bold text-lg">4</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        View Predictions
+                      </h3>
+                      <p className="text-gray-600">
+                        Once training is complete, the system will display a forecast
+                        chart showing predicted sales values for the selected number
+                        of days.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-14">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">
+        <div className="relative overflow-hidden rounded-2xl bg-white/10 shadow-xl backdrop-blur-xl ring-1 ring-white/10 mb-14">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/30" />
+          <div className="relative p-4 sm:p-6">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">
             Upload Data
           </h3>
           <div className="flex flex-wrap gap-4 mb-6">
@@ -383,7 +428,7 @@ const TrainModel = () => {
             )}
           </div>
           <div
-            className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center"
+            className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm shadow-lg ring-1 ring-white/20 border-2 border-dashed border-white/30 p-4 sm:p-6 text-center hover:shadow-xl transition-all duration-200"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
           >
@@ -462,6 +507,7 @@ const TrainModel = () => {
                 </label>
               </>
             )}
+          </div>
           </div>
         </div>
       </div>

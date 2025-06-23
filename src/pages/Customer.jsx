@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useCustomer } from "../context/useCustomers";
 import CustomerPopup from "../components/CustomerPopup";
+import { Button } from "../components/ui/Button";
+import { MdStore, MdLocationOn, MdEdit, MdDelete } from "react-icons/md";
 
 const Customer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,23 +21,26 @@ const Customer = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="flex-1 p-6">
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+    <div className="space-y-6">
+      <div className="relative overflow-hidden rounded-2xl bg-white/10 shadow-xl backdrop-blur-xl ring-1 ring-white/10">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-white/30" />
+        <div className="relative p-8">
           <div className="flex justify-between items-start mb-6 flex-col sm:flex-row gap-4">
             <div>
-              <h2 className="text-2xl font-semibold text-gray-800">Outlets</h2>
-              <p className="text-gray-500">
+              <h2 className="text-2xl font-semibold text-gray-900">Outlets</h2>
+              <p className="text-gray-600 mt-1">
                 Manage your restaurant&apos;s outlets
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <button
+              <Button
                 onClick={() => setIsOpen(!isOpen)}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                variant="solid"
+                color="blue"
               >
-                + Add New Outlet
-              </button>
+                <MdStore className="mr-2 h-4 w-4" />
+                Add New Outlet
+              </Button>
             </div>
           </div>
 
@@ -44,43 +49,35 @@ const Customer = () => {
               customers.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white border rounded-lg shadow p-4"
+                  className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm shadow-lg ring-1 ring-white/20 hover:shadow-xl transition-all duration-200 hover:scale-105 group"
                 >
-                  <h3 className="text-lg font-medium text-black">
-                    {item.name}
-                  </h3>
-                  <div className="flex justify-between items-center mt-2">
-                    <div className="flex justify-end space-x-2 w-full">
-                      <button onClick={() => handleUpdate(item)}>
-                        <svg
-                          className="w-4 h-4 text-gray-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 p-3 shadow-lg">
+                        <MdStore className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleUpdate(item)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg bg-white/50 hover:bg-white/70 text-gray-600 hover:text-blue-600"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                          />
-                        </svg>
-                      </button>
-                      <button onClick={() => handleDelete(item)}>
-                        <svg
-                          className="w-4 h-4 text-gray-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                          <MdEdit className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(item)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg bg-white/50 hover:bg-white/70 text-gray-600 hover:text-red-600"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </button>
+                          <MdDelete className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      {item.name}
+                    </h3>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <MdLocationOn className="h-4 w-4" />
+                      <span>{item.city || "No location"}</span>
                     </div>
                   </div>
                 </div>
