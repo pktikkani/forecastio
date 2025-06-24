@@ -166,6 +166,7 @@ const Menu = () => {
         selectedCustomer={selectedCustomer}
         selectedLocationList={selectedLocationList}
         handleCustomerSelect={handleCustomerSelect}
+        setSelectedCustomer={setSelectedCustomer}
         setMenuLocation={setMenuLocation}
         defaultCustomerId={customers?.[0]?.id}
         defaultLocationId={selectedLocationList?.[0]?.id}

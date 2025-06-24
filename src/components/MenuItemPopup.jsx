@@ -16,7 +16,8 @@ const MenuItemPopup = ({
   setMenuLocation,
   defaultCustomerId,
   defaultLocationId,
-  selectedCustomer
+  selectedCustomer,
+  setSelectedCustomer
 }) => {
   const { token } = useAuth();
   const { menu, menuLocation, setMenu } = useMenu();
@@ -49,7 +50,7 @@ const MenuItemPopup = ({
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setError(null); // Clear error on input change
+    setError(null);
   };
 
   const validateForm = () => {
